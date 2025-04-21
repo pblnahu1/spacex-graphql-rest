@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  spacex-api:
+    container_name: spacex_api_rest_graphql
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
