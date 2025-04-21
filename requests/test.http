@@ -1,0 +1,137 @@
+############
+# API REST
+############
+
+### últimos 10 lanzamientos
+GET http://localhost:4000/api/launches
+Content-Type: application/json
+
+### 5 lanzamientos
+GET http://localhost:4000/api/launches?limit=5
+Content-Type: application/json
+
+### lanzamiento específico por ID
+GET http://localhost:4000/api/launches/63161384ffc78f3b8567070e
+Content-Type: application/json
+
+### lanzamientos con límite 2
+GET http://localhost:4000/api/launches?limit=2
+Content-Type: application/json
+
+### lanzamientos con límite 12
+GET http://localhost:4000/api/launches?limit=12
+Content-Type: application/json
+
+### lanzamiento que probablemente no exista (test de error)
+GET http://localhost:4000/api/launches/NO_EXISTE
+Content-Type: application/json
+
+### lanzamientos con límite 0
+GET http://localhost:4000/api/launches?limit=0
+Content-Type: application/json
+
+### lanzamientos con orden inverso (sort)
+GET http://localhost:4000/api/launches?limit=5&sort=asc
+Content-Type: application/json
+
+### lanzamientos con límite alto
+GET http://localhost:4000/api/launches?limit=50
+Content-Type: application/json
+
+
+
+#############
+# API GraphQL
+#############
+
+### todos los lanzamientos con nombre, fecha y éxito
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query { launches { name date_utc success } }"
+}
+
+### todos los lanzamientos con rocket anidado
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query { launches { name rocket { name type } } }"
+}
+
+### un lanzamiento específico por ID
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query ($id: ID!) { launch(id: $id) { name success flight_number } }",
+  "variables": {
+    "id": "633f724c0531f07b4fdf59c5"
+  }
+}
+
+### lanzamiento con flight_number y rocket
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query ($id: ID!) { launch(id: $id) { name flight_number rocket { name } } }",
+  "variables": {
+    "id": "5eb87d47ffd86e000604b38a"
+  }
+}
+
+### detalles adicionales (agregar details al LaunchType)
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query ($id: ID!) { launch(id: $id) { name details success } }",
+  "variables": {
+    "id": "5eb87d47ffd86e000604b38a"
+  }
+}
+
+### lanzamiento inválido (test de error)
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query ($id: ID!) { launch(id: $id) { name } }",
+  "variables": {
+    "id": "NO_EXISTE"
+  }
+}
+
+### solo nombres de lanzamientos
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query { launches { name } }"
+}
+
+### nombre y fecha de todos
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query { launches { name date_utc } }"
+}
+
+### launch con nombre largo y éxito
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query { launches { name success } }"
+}
+
+### lanzamiento y nombre del rocket
+POST http://localhost:4000/graphql
+Content-Type: application/json
+
+{
+  "query": "query { launches { name rocket { name } } }"
+}
