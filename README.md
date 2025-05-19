@@ -95,5 +95,4 @@ npm install && npm run dev
 # Pro Tip
 Para probar la API fácilmente, podés usar el archivo requests/test.http con el plugin REST Client de VS Code.
 
-# Autor
-Pablo Torrez
+# Autor: [Pablo Torrez](https://github.com/pblnahu1)
